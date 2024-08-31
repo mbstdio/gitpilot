@@ -1,7 +1,7 @@
 {
-	"name": "commitpilot",
+	"name": "gitpilot",
 	"version": "0.0.1b",
-	"description": "Write git commit assisted by AI",
+	"description": "Write git commits assisted by AI",
 	"author": "Killian Tornese (@dodo021)",
 	"license": "MIT",
 	"keywords": [
@@ -12,7 +12,7 @@
 		"gpt"
 	],
 	"bin": {
-		"commitpilot": "./dist/cli.js",
+		"gitpilot": "./dist/cli.js",
 		"comp": "./dist/cli.js"
 	},
 	"scripts": {
