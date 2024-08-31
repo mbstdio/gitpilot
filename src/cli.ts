@@ -5,7 +5,7 @@ import init from './commands/init';
 
 cli(
 	{
-		name: 'commitpilot',
+		name: 'gitpilot',
 		version: version,
 		flags: {
 			generate: {

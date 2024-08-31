@@ -3,7 +3,7 @@ import fs from 'fs';
 import path from 'path';
 import os from 'os';
 
-const configPath = path.join(os.homedir(), '.commitpilot');
+const configPath = path.join(os.homedir(), '.gitpilot');
 
 export default command(
 	{
