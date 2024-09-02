@@ -1,3 +1,5 @@
 export type PromptOptions = {
-	type: 'normal' | 'conventional' | 'imitate';
+	behavior: 'natural' | 'conventional' | 'imitate';
+	lang: string;
+	length: number;
 };
