@@ -14,9 +14,9 @@ cli(
 			},
 		},
 		commands: [init, config],
-		ignoreArgv: (type) => type === 'unknown-flag' || type === 'argument',
+		ignoreArgv: (type: any) => type === 'unknown-flag' || type === 'argument',
 	},
-	(argv) => {
+	(argv: any) => {
 		console.log(argv);
 	}
 );
