@@ -17,6 +17,7 @@
 	},
 	"scripts": {
 		"build": "pkgroll --minify",
+		"dev": "pkgroll --minify --watch",
 		"typecheck": "tsc"
 	},
 	"devDependencies": {
