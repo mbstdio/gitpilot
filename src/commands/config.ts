@@ -1,9 +1,5 @@
 import { command } from 'cleye';
-import fs from 'fs';
-import path from 'path';
-import os from 'os';
-
-const configPath = path.join(os.homedir(), '.gitpilot');
+import AppConfig from '../core/app_config';
 
 export default command(
 	{
@@ -11,34 +7,29 @@ export default command(
 		parameters: ['<param>', '[value]'],
 	},
 	(argv) => {
-		if (!isInitialized()) {
+		const config = new AppConfig();
+
+		if (!config.initialized()) {
 			console.log('Config file not found, please run init command');
 			return;
 		}
 
+		config.load();
+
 		const { param, value } = argv._;
 
 		if (value === undefined) {
-			const config = getConfig();
-
-			if (config[param] === undefined) {
+			if (config.get(param) === undefined) {
 				console.log(`Param: ${param} not found`);
 				return;
 			}
 
-			console.log(`${param}=${config[param]}`);
+			console.log(`${param}=${config.get(param)}`);
 		}
 
 		if (value !== undefined) {
+			config.set(param, value);
 			console.log(`Set param: ${param} with value: ${value}`);
 		}
 	}
 );
-
-function isInitialized() {
-	return fs.existsSync(configPath);
-}
-
-function getConfig(): any {
-	return JSON.parse(fs.readFileSync(configPath, 'utf8'));
-}
