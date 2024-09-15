@@ -20,7 +20,7 @@ export default command(
 		const options = {
 			count: 3,
 			lang: 'en',
-			type: 'conventional',
+			behavior: 'conventional',
 			provider: 'openai',
 			model: 'gpt-4o',
 			key: '',
@@ -28,7 +28,7 @@ export default command(
 			length: 50,
 		};
 
-		options.type = await select({
+		options.behavior = await select({
 			message: 'What type of commit message do you want to generate?',
 			choices: [
 				{ name: 'Natural', value: 'natural' },
