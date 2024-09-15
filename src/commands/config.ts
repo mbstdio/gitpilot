@@ -1,5 +1,6 @@
 import { command } from 'cleye';
-import AppConfig from '../core/app_config';
+import AppConfig from '../core/app_config.js';
+import { AppConfigParamsKeys } from '../../types/app_config.js';
 
 export default command(
 	{
@@ -16,7 +17,10 @@ export default command(
 
 		config.load();
 
-		const { param, value } = argv._;
+		const { param, value } = argv._ as {
+			param: AppConfigParamsKeys;
+			value?: string;
+		};
 
 		if (value === undefined) {
 			if (config.get(param) === undefined) {

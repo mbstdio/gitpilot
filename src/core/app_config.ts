@@ -1,20 +1,39 @@
 import fs from 'fs';
 import path from 'path';
 import os from 'os';
+import {
+	AppConfigParams,
+	AppConfigParamsKeys,
+} from '../../types/app_config.js';
 
 export default class AppConfig {
 	private configPath: string = path.join(os.homedir(), '.gitpilot');
-	private config: any = {};
+	private config: AppConfigParams = {
+		behavior: 'conventional',
+		lang: 'en',
+		length: 50,
+		provider: 'openai',
+		model: 'gpt-3.5-turbo',
+		key: '',
+		timeout: 5000,
+		count: 1,
+	};
+
+	constructor() {
+		this.load();
+	}
 
 	public load() {
-		this.config = JSON.parse(fs.readFileSync(this.configPath, 'utf8'));
+		this.config = JSON.parse(
+			fs.readFileSync(this.configPath, 'utf8')
+		) as AppConfigParams;
 	}
 
 	public initialized(): boolean {
 		return fs.existsSync(this.configPath);
 	}
 
-	public get(param: string = ''): string | any | undefined {
+	public get(param: AppConfigParamsKeys | '' = ''): string | any | undefined {
 		if (param === '') {
 			return this.config;
 		}
@@ -22,7 +41,7 @@ export default class AppConfig {
 		return this.config[param];
 	}
 
-	public set(param: string, value: string) {
+	public set(param: AppConfigParamsKeys, value: string): void {
 		if (this.config[param] === undefined) return;
 
 		this.config[param] = value;
