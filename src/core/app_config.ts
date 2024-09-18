@@ -24,9 +24,11 @@ export default class AppConfig {
 	}
 
 	public load() {
-		this.config = JSON.parse(
-			fs.readFileSync(this.configPath, 'utf8')
-		) as AppConfigParams;
+		if (this.initialized()) {
+			this.config = JSON.parse(
+				fs.readFileSync(this.configPath, 'utf8')
+			) as AppConfigParams;
+		}
 	}
 
 	public initialized(): boolean {
