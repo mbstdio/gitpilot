@@ -20,6 +20,12 @@ export default class GitPilot {
 
 		if (this.aiProvider[config.get('provider')]) {
 			const files = await Git.stagedDiffFiles();
+
+			if (files.length === 0) {
+				console.log('No files to commit');
+				return;
+			}
+
 			const diff = await Git.stagedDiff();
 
 			const provider = this.aiProvider[config.get('provider')];
