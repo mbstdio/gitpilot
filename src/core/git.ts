@@ -33,6 +33,15 @@ export default class Git {
 		await this.execute('git', ['commit', '-m', message]);
 	}
 
+	public static async listCommits(number: number = 5): Promise<string> {
+		return this.execute('git', [
+			'log',
+			`-${number}`,
+			'--online',
+			'--format=%s',
+		]);
+	}
+
 	public static async execute(
 		command: string,
 		options: string[]
