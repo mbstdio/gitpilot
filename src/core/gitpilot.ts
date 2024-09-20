@@ -1,8 +1,12 @@
+import chalk from 'chalk';
 import AIProvider from '../interfaces/ai_provider.js';
 import OpenAI from '../providers/openai.js';
+import { spinner } from '../ui/spinner.js';
 import AppConfig from './app_config.js';
 import Git from './git.js';
-import { input, select } from '@inquirer/prompts';
+import { select } from '@inquirer/prompts';
+import { lifeline } from '../ui/lifeline.js';
+import { input } from '../ui/input.js';
 
 export default class GitPilot {
 	private aiProvider: { [key: string]: AIProvider };
@@ -15,22 +19,33 @@ export default class GitPilot {
 	}
 
 	public async generate(): Promise<void> {
-		console.log('Generating git commit messages...');
 		const config = new AppConfig();
+		const uilifeline = lifeline();
+		const uispinner = spinner();
+
+		uilifeline.start(chalk.bgBlueBright(' GitPilot '));
 
 		if (this.aiProvider[config.get('provider')]) {
+			uilifeline.step('Checking staged files...');
+
 			const files = await Git.stagedDiffFiles();
 
 			if (files.length === 0) {
-				console.log('No files to commit');
+				uilifeline.end(chalk.bgYellow('No files to commit'));
 				return;
+			}
+
+			uilifeline.step(chalk.green(`${files.length} files staged`));
+			for (const file of files) {
+				uilifeline.line(`  ${file}`);
 			}
 
 			const diff = await Git.stagedDiff();
 
 			const provider = this.aiProvider[config.get('provider')];
 
-			const commits = await provider.compute(
+			uispinner.start(`Generating commits with ${config.get('provider')}...`);
+			/*const commits = await provider.compute(
 				{
 					behavior: config.get('behavior'),
 					lang: config.get('lang'),
@@ -38,12 +53,22 @@ export default class GitPilot {
 					count: config.get('count'),
 				},
 				diff
-			);
+			);*/
+			uispinner.stop();
 
-			const selectedCommits = await select({
+			const value = await input({
+				message: 'Test',
+				default: '',
+			});
+
+			console.log('Value: ' + value);
+
+			return;
+
+			/*const selectedCommits = await select({
 				message: 'Wich commit message do you want to use?',
 				choices: commits.map((commit) => ({ name: commit, value: commit })),
-			});
+			});*/
 
 			const finalCommit = await input({
 				message: 'Edit :\n',
