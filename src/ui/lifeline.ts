@@ -23,6 +23,7 @@ export const lifeline = () => {
 
 	return {
 		start,
+		space,
 		step,
 		line,
 		end,
