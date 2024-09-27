@@ -19,7 +19,8 @@ cli(
 		commands: [init, config],
 		ignoreArgv: (type: any) => type === 'unknown-flag' || type === 'argument',
 	},
-	(argv: any) => {
-		gitPilot.generate();
+	async (argv: any) => {
+		await gitPilot.generate();
+		process.exit(0);
 	}
 );
