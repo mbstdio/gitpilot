@@ -18,7 +18,7 @@
 	},
 	"scripts": {
 		"build": "pkgroll --minify",
-		"dev": "pkgroll --minify --watch",
+		"dev": "pkgroll --watch",
 		"typecheck": "tsc"
 	},
 	"devDependencies": {
@@ -29,7 +29,8 @@
 		"pkgroll": "^2.5.0",
 		"sisteransi": "^1.0.5",
 		"tsx": "^4.19.1",
-		"typescript": "^5.6.2"
+		"typescript": "^5.6.2",
+		"wrap-ansi": "^9.0.0"
 	},
 	"release": {
 		"branches": [
