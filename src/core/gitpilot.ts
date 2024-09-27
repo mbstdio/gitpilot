@@ -1,11 +1,11 @@
 import chalk from 'chalk';
 import AIProvider from '../interfaces/ai_provider.js';
 import OpenAI from '../providers/openai.js';
-import { spinner } from '../ui/spinner.js';
 import AppConfig from './app_config.js';
 import Git from './git.js';
 import { select } from '@inquirer/prompts';
 import { lifeline } from '../ui/lifeline.js';
+import { spinner } from '../ui/spinner.js';
 import { input } from '../ui/input.js';
 
 export default class GitPilot {
@@ -45,7 +45,7 @@ export default class GitPilot {
 			const provider = this.aiProvider[config.get('provider')];
 
 			uispinner.start(`Generating commits with ${config.get('provider')}...`);
-			/*const commits = await provider.compute(
+			const commits = await provider.compute(
 				{
 					behavior: config.get('behavior'),
 					lang: config.get('lang'),
@@ -53,29 +53,24 @@ export default class GitPilot {
 					count: config.get('count'),
 				},
 				diff
-			);*/
+			);
 			uispinner.stop();
 
-			const value = await input({
-				message: 'Test',
-				default: '',
-			});
-
-			console.log('Value: ' + value);
-
-			return;
-
-			/*const selectedCommits = await select({
+			const selectedCommits = await select({
 				message: 'Wich commit message do you want to use?',
 				choices: commits.map((commit) => ({ name: commit, value: commit })),
-			});*/
+			});
+
+			uilifeline.step(`Commit selected...`);
 
 			const finalCommit = await input({
-				message: 'Edit :\n',
+				message: 'Edit',
 				default: selectedCommits,
 			});
 
 			await Git.commit(finalCommit);
+
+			uilifeline.end(chalk.bgGreen('Commited'));
 		} else {
 			console.error(`Uknown provider ${config.get('provider')}`);
 		}
