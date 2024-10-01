@@ -1,7 +1,7 @@
 {
 	"name": "@mbstudio/gitpilot",
 	"version": "0.0.4-b",
-	"description": "Write git commits assisted by AI",
+	"description": "Your Git Terminal AI assistant that can write commits with ease for you",
 	"author": "Killian Tornese (@dodo021)",
 	"license": "MIT",
 	"repository": {
