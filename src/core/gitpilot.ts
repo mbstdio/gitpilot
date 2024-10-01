@@ -25,6 +25,13 @@ export default class GitPilot {
 
 		uilifeline.start(chalk.bgBlueBright(' GitPilot '));
 
+		if (!config.initialized()) {
+			uilifeline.step(chalk.yellow('Config not initialized'));
+
+			uilifeline.end(`Please run ${chalk.cyanBright('gitpilot init')}`);
+			return;
+		}
+
 		if (this.aiProvider[config.get('provider')]) {
 			uilifeline.step('Checking staged files...');
 
