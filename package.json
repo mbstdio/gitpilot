@@ -1,9 +1,14 @@
 {
-	"name": "gitpilot",
+	"name": "@mbstudio/gitpilot",
 	"version": "0.0.1b",
 	"description": "Write git commits assisted by AI",
 	"author": "Killian Tornese (@dodo021)",
 	"license": "MIT",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/mbstdio/gitpilot"
+	},
+	"homepage": "https://github.com/mbstdio/gitpilot",
 	"type": "module",
 	"keywords": [
 		"git",
@@ -14,7 +19,7 @@
 	],
 	"bin": {
 		"gitpilot": "./dist/cli.js",
-		"comp": "./dist/cli.js"
+		"gp": "./dist/cli.js"
 	},
 	"scripts": {
 		"build": "pkgroll --minify",
