@@ -5,6 +5,7 @@ export default class Git {
 		'package-lock.json',
 		'pnpm-lock.yaml',
 		'*.lock',
+		'.env',
 	].map((file) => `:(exclude)${file}`);
 
 	public static async stagedDiffFiles(): Promise<string[]> {
