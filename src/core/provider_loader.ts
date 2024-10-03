@@ -21,4 +21,8 @@ export default class ProviderLoader {
 
 		return new this.providers[providerId](key, model);
 	}
+
+	public getProviders(): string[] {
+		return Object.keys(this.providers);
+	}
 }
