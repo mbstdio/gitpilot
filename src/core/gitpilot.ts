@@ -51,16 +51,32 @@ export default class GitPilot {
 			uispinner.start(
 				`Generating commits with ${this.config.get('provider')}...`
 			);
-			const commits = await this.provider.compute(
-				{
-					behavior: this.config.get('behavior'),
-					lang: this.config.get('lang'),
-					length: this.config.get('length'),
-					count: this.config.get('count'),
-				},
-				diff
-			);
-			uispinner.stop();
+
+			let commits: string[] | undefined = undefined;
+			try {
+				commits = await this.provider.compute(
+					{
+						behavior: this.config.get('behavior'),
+						lang: this.config.get('lang'),
+						length: this.config.get('length'),
+						count: this.config.get('count'),
+					},
+					diff
+				);
+
+				uispinner.stop();
+			} catch (e) {
+				// TODO: Improve error handling
+
+				uispinner.stop();
+				uilifeline.end(
+					`${chalk.bgRed(' Error ')} Please check your configuration file.`
+				);
+			}
+
+			if (commits === undefined) {
+				return;
+			}
 
 			const selectedCommits = await select({
 				message: 'Wich commit message do you want to use?',

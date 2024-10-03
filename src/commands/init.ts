@@ -88,7 +88,6 @@ export default command(
 		options.provider = await select({
 			message: 'Which AI provider do you want to use?',
 			choices: [{ name: 'OpenAI', value: 'openai' }],
-			default: 'openai',
 		});
 
 		const provider = providerLoader.getInstance(options.provider, '', '');
