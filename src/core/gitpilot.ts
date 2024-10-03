@@ -76,7 +76,7 @@ export default class GitPilot {
 
 			await Git.commit(finalCommit);
 
-			uilifeline.end(chalk.bgGreen('Commited'));
+			uilifeline.end(`${chalk.bgGreen(' Success ')} files commited`);
 		} else {
 			uilifeline.end(
 				`${chalk.bgRed(' Error ')} Unknown provider "${this.config.get(
