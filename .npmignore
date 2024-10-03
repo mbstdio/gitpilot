@@ -1,0 +1,10 @@
+.github
+node_modules
+src
+types
+
+.editorconfig
+.gitignore
+tsconfig.json
+
+pnpm-lock.yaml
