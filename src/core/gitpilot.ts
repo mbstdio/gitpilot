@@ -1,7 +1,7 @@
 import chalk from 'chalk';
 import AIProvider from '../interfaces/ai_provider.js';
-import OpenAI from '../providers/openai.js';
 import AppConfig from './app_config.js';
+import ProviderLoader from './provider_loader.js';
 import Git from './git.js';
 import { select } from '@inquirer/prompts';
 import { lifeline } from '../ui/lifeline.js';
@@ -9,30 +9,29 @@ import { spinner } from '../ui/spinner.js';
 import { input } from '../ui/input.js';
 
 export default class GitPilot {
-	private aiProvider: { [key: string]: AIProvider };
-
-	constructor() {
-		const config = new AppConfig();
-		this.aiProvider = {
-			openai: new OpenAI(config.get('key'), config.get('model')),
-		};
-	}
+	private provider: AIProvider | null = null;
+	private config: AppConfig = new AppConfig();
 
 	public async generate(): Promise<void> {
-		const config = new AppConfig();
 		const uilifeline = lifeline();
 		const uispinner = spinner();
 
 		uilifeline.start(chalk.bgBlueBright(' GitPilot '));
 
-		if (!config.initialized()) {
+		if (!this.config.initialized()) {
 			uilifeline.step(chalk.yellow('Config not initialized'));
 
 			uilifeline.end(`Please run ${chalk.cyanBright('gitpilot init')}`);
 			return;
 		}
 
-		if (this.aiProvider[config.get('provider')]) {
+		this.provider = new ProviderLoader().getInstance(
+			this.config.get('provider'),
+			this.config.get('key'),
+			this.config.get('model')
+		);
+
+		if (this.provider !== null) {
 			uilifeline.step('Checking staged files...');
 
 			const files = await Git.stagedDiffFiles();
@@ -49,15 +48,15 @@ export default class GitPilot {
 
 			const diff = await Git.stagedDiff();
 
-			const provider = this.aiProvider[config.get('provider')];
-
-			uispinner.start(`Generating commits with ${config.get('provider')}...`);
-			const commits = await provider.compute(
+			uispinner.start(
+				`Generating commits with ${this.config.get('provider')}...`
+			);
+			const commits = await this.provider.compute(
 				{
-					behavior: config.get('behavior'),
-					lang: config.get('lang'),
-					length: config.get('length'),
-					count: config.get('count'),
+					behavior: this.config.get('behavior'),
+					lang: this.config.get('lang'),
+					length: this.config.get('length'),
+					count: this.config.get('count'),
 				},
 				diff
 			);
@@ -79,7 +78,11 @@ export default class GitPilot {
 
 			uilifeline.end(chalk.bgGreen('Commited'));
 		} else {
-			console.error(`Uknown provider ${config.get('provider')}`);
+			uilifeline.end(
+				`${chalk.bgRed(' Error ')} Unknown provider "${this.config.get(
+					'provider'
+				)}". Please check your configuration file.`
+			);
 		}
 	}
 }

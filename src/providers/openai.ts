@@ -1,14 +1,17 @@
+import { AIModel } from '../../types/ai_model.js';
 import { ProviderComputeOptions } from '../../types/providers.js';
 import PromptGenerator from '../core/prompt_generator.js';
 import AIProvider from '../interfaces/ai_provider.js';
 
 export default class OpenAI implements AIProvider {
 	public readonly key: string;
-	public readonly model: string;
+	public readonly currentModel: string;
+	public readonly displayName: string;
 
 	constructor(key: string, model: string) {
 		this.key = key;
-		this.model = model;
+		this.currentModel = model;
+		this.displayName = 'OpenAI';
 	}
 
 	async compute(
@@ -29,7 +32,7 @@ export default class OpenAI implements AIProvider {
 				Authorization: `Bearer ${this.key}`,
 			},
 			body: JSON.stringify({
-				model: this.model,
+				model: this.currentModel,
 				messages: [
 					{
 						role: 'system',
@@ -53,5 +56,14 @@ export default class OpenAI implements AIProvider {
 		);
 
 		return Array.from(uniqueChoices);
+	}
+
+	getModels(): Promise<AIModel[]> {
+		return Promise.resolve([
+			{ name: 'GPT-4o', id: 'gpt-4o' },
+			{ name: 'GPT-4o-mini', id: 'gpt-4o-mini' },
+			{ name: 'GPT-4 Turbo', id: 'gpt-4-turbo' },
+			{ name: 'GPT-3.5 Turbo', id: 'gpt-3.5-turbo' },
+		]);
 	}
 }
