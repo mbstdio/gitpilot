@@ -87,7 +87,10 @@ export default command(
 		// TODO: Load providers dynamically from the provider loader
 		options.provider = await select({
 			message: 'Which AI provider do you want to use?',
-			choices: [{ name: 'OpenAI', value: 'openai' }],
+			choices: [
+				{ name: 'Anthropic', value: 'anthropic' },
+				{ name: 'OpenAI', value: 'openai' },
+			],
 		});
 
 		const provider = providerLoader.getInstance(options.provider, '', '');

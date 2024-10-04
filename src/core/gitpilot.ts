@@ -69,6 +69,8 @@ export default class GitPilot {
 				// TODO: Improve error handling
 
 				uispinner.stop();
+
+				console.log(e);
 				uilifeline.end(
 					`${chalk.bgRed(' Error ')} Please check your configuration file.`
 				);

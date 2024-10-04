@@ -1,4 +1,5 @@
 import AIProvider from '../interfaces/ai_provider.js';
+import Anthropic from '../providers/anthropic.js';
 import OpenAI from '../providers/openai.js';
 
 export default class ProviderLoader {
@@ -7,6 +8,7 @@ export default class ProviderLoader {
 	constructor() {
 		this.providers = {
 			openai: OpenAI,
+			anthropic: Anthropic,
 		};
 	}
 

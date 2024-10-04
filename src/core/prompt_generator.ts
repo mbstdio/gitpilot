@@ -39,6 +39,7 @@ Commits MUST start with a type (e.g., feat, fix) followed by an OPTIONAL scope, 
 			`Commit max length : ${this.options.length}`,
 			`Ignore changes that appear to be unrelevant.`,
 			this.behaviorInstruction(),
+			'Only return the commit message without any explications and keep it concise.',
 		].join('\n');
 	}
 }
