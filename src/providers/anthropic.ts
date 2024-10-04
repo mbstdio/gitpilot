@@ -26,6 +26,7 @@ export default class Anthropic implements AIProvider {
 
 		const completionTasksResult = await Promise.all(completionTasks);
 		const uniqueChoices = new Set<string>(completionTasksResult);
+		uniqueChoices.delete('');
 
 		return Array.from(uniqueChoices);
 	}
@@ -73,6 +74,6 @@ export default class Anthropic implements AIProvider {
 
 		const data = await resp.json();
 
-		return data.content[0].text.split('\n')[0];
+		return data.content[0].text.split('\n')[0] || '';
 	}
 }
