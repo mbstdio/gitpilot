@@ -49,7 +49,7 @@ export default class GitPilot {
 			const diff = await Git.stagedDiff();
 
 			uispinner.start(
-				`Generating commits with ${this.config.get('provider')}...`
+				`Generating commits with ${this.provider.displayName}...`
 			);
 
 			let commits: string[] | undefined = undefined;
