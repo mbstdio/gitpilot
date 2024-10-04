@@ -19,6 +19,7 @@
 	],
 	"bin": {
 		"gitpilot": "./dist/cli.js",
+		"gitp": "./dist/cli.js",
 		"gp": "./dist/cli.js"
 	},
 	"scripts": {
