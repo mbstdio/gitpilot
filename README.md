@@ -33,7 +33,7 @@ pnpm add -g @mbstudio/gitpilot
 - Multiple configuration options to customize to your liking
 - Use popular AI providers to generate commit messages.
   - OpenAI
-  - Antropic
+  - Anthropic
   - More to come...
 - Edit commit messages before finalizing the commit.
 - Multiple generation behaviors can be used to write commits that suit your style.
