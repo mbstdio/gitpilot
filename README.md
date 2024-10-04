@@ -4,7 +4,9 @@
     <h1 align="center">GitPilot</h1>
   </div>
 	<p>Your Git Terminal AI assistant that can write commits with ease for you.</p>
-	<a href="https://www.npmjs.com/package/@mbstudio/gitpilot"><img src="https://img.shields.io/npm/v/@mbstudio/gitpilot" alt="Current version"></a>
+	<a href="https://www.npmjs.com/package/@mbstudio/gitpilot"><img src="https://img.shields.io/npm/v/@mbstudio/gitpilot?style=flat&colorA=444&colorB=199dda" alt="Current version"></a>
+	<a href="https://www.npmjs.com/package/@mbstudio/gitpilot?activeTab=versions"><img src="https://img.shields.io/npm/dm/@mbstudio/gitpilot.svg?style=flat&colorA=444&colorB=8abe2f" alt="Downloads"></a>
+	<a href="https://github.com/mbstdio/gitpilot"><img src="https://img.shields.io/github/stars/mbstdio/gitpilot?style=flat&colorA=444&colorB=efce07" alt="Stars"></a>
 </div>
 
 ## Installation
