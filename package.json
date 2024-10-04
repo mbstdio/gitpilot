@@ -29,7 +29,7 @@
 	},
 	"devDependencies": {
 		"@inquirer/prompts": "^5.5.0",
-		"@types/node": "^22.5.5",
+		"@types/node": "^22.7.4",
 		"chalk": "^4.1.2",
 		"cleye": "^1.3.2",
 		"pkgroll": "^2.5.0",
