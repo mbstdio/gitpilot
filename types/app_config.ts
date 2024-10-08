@@ -1,8 +1,8 @@
 export type AppConfigParams = {
 	count: number;
-	lang: string;
-	behavior: 'natural' | 'conventional' | 'imitate';
-	provider: string;
+	lang: 'en' | 'fr' | 'de' | 'it' | 'jp' | string;
+	behavior: 'natural' | 'conventional' | 'imitate' | string;
+	provider: 'openai' | 'anthropic' | string;
 	model: string;
 	key: string;
 	timeout: number;

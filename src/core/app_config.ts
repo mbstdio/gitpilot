@@ -13,7 +13,7 @@ export default class AppConfig {
 		lang: 'en',
 		length: 50,
 		provider: 'openai',
-		model: 'gpt-3.5-turbo',
+		model: 'gpt-4o-mini',
 		key: '',
 		timeout: 5000,
 		count: 1,
