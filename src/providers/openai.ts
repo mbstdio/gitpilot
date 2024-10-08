@@ -36,7 +36,7 @@ export default class OpenAI implements AIProvider {
 				messages: [
 					{
 						role: 'system',
-						content: generator.compute(),
+						content: await generator.compute(),
 					},
 					{
 						role: 'user',

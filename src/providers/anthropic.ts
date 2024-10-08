@@ -59,7 +59,7 @@ export default class Anthropic implements AIProvider {
 			},
 			body: JSON.stringify({
 				model: this.currentModel,
-				system: generator.compute(),
+				system: await generator.compute(),
 				messages: [
 					{
 						role: 'user',

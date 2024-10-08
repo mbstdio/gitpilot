@@ -35,12 +35,7 @@ export default class Git {
 	}
 
 	public static async listCommits(number: number = 5): Promise<string> {
-		return this.execute('git', [
-			'log',
-			`-${number}`,
-			'--online',
-			'--format=%s',
-		]);
+		return this.execute('git', ['log', `-${number}`, '--format=%s']);
 	}
 
 	public static async execute(
