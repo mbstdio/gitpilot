@@ -6,6 +6,7 @@ import { input, select } from '@inquirer/prompts';
 import ProviderLoader from '../core/provider_loader.js';
 import chalk from 'chalk';
 import { lifeline } from '../ui/lifeline.js';
+import AppConfig from '../core/app_config.js';
 
 const configPath = path.join(os.homedir(), '.gitpilot');
 
@@ -15,19 +16,7 @@ export default command(
 		parameters: [],
 	},
 	async (argv) => {
-		const uilifeline = lifeline();
-
-		uilifeline.start(chalk.bgBlueBright(' GitPilot '));
-
-		if (fs.existsSync(configPath)) {
-			uilifeline.end('Config file already exists');
-			return;
-		}
-
-		uilifeline.space();
-
-		const providerLoader = new ProviderLoader();
-
+		const config = new AppConfig();
 		const options = {
 			count: 3,
 			lang: 'en',
@@ -38,6 +27,37 @@ export default command(
 			timeout: 1000,
 			length: 50,
 		};
+		const uilifeline = lifeline();
+
+		uilifeline.start(chalk.bgBlueBright(' GitPilot '));
+
+		if (config.initialized()) {
+			uilifeline.step(`${chalk.bgYellow(' /!\\ ')} Config file already exists`);
+			uilifeline.space();
+
+			const overwrite = await select({
+				message: 'Do you want to rerun the configuration?',
+				choices: [
+					{ name: 'Yes', value: true },
+					{ name: 'No', value: false },
+				],
+				default: false,
+			});
+
+			if (!overwrite) {
+				uilifeline.end('Configuration not modified');
+				return;
+			} else {
+				options.behavior = config.get('behavior');
+				options.lang = config.get('lang');
+				options.count = config.get('count');
+				options.key = config.get('key');
+			}
+		}
+
+		uilifeline.space();
+
+		const providerLoader = new ProviderLoader();
 
 		options.behavior = await select({
 			message: 'What type of commit message do you want to generate?',
@@ -46,7 +66,7 @@ export default command(
 				{ name: 'Conventional', value: 'conventional' },
 				{ name: 'Imitate', value: 'imitate' },
 			],
-			default: 'conventional',
+			default: options.behavior,
 		});
 
 		uilifeline.space();
@@ -60,7 +80,7 @@ export default command(
 				{ name: '4', value: 4 },
 				{ name: '5', value: 5 },
 			],
-			default: 3,
+			default: options.count,
 		});
 
 		uilifeline.space();
@@ -79,7 +99,7 @@ export default command(
 				{ name: 'Simplified Chinese', value: 'zh' },
 				{ name: 'Spanish', value: 'es' },
 			],
-			default: 'en',
+			default: options.lang,
 		});
 
 		uilifeline.space();
@@ -118,10 +138,15 @@ export default command(
 
 		options.key = await input({
 			message: 'Enter your API key',
+			default: options.key,
 		});
 
 		fs.writeFileSync(configPath, JSON.stringify(options));
 
-		uilifeline.end(`${chalk.bgGreen(' Success ')} Configuration initialized`);
+		if (!config.initialized()) {
+			uilifeline.end(`${chalk.bgGreen(' Success ')} Configuration initialized`);
+		} else {
+			uilifeline.end(`${chalk.bgGreen(' Success ')} Configuration updated`);
+		}
 	}
 );
