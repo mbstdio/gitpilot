@@ -32,7 +32,7 @@ export default command(
 		uilifeline.start(chalk.bgBlueBright(' GitPilot '));
 
 		if (config.initialized()) {
-			uilifeline.step(`${chalk.bgYellow(' /!\\ ')} Config file already exists`);
+			uilifeline.step(`${chalk.bgYellow(' /!\\ Config file already exists')}`);
 			uilifeline.space();
 
 			const overwrite = await select({
@@ -104,13 +104,10 @@ export default command(
 
 		uilifeline.space();
 
-		// TODO: Load providers dynamically from the provider loader
+		const providers = providerLoader.listProviders();
 		options.provider = await select({
 			message: 'Which AI provider do you want to use?',
-			choices: [
-				{ name: 'Anthropic', value: 'anthropic' },
-				{ name: 'OpenAI', value: 'openai' },
-			],
+			choices: providers,
 		});
 
 		const provider = providerLoader.getInstance(options.provider, '', '');

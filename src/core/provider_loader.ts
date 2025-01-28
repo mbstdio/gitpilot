@@ -1,6 +1,7 @@
 import AIProvider from '../interfaces/ai_provider.js';
 import Anthropic from '../providers/anthropic.js';
 import OpenAI from '../providers/openai.js';
+import TogetherAI from '../providers/togetherai.js';
 
 export default class ProviderLoader {
 	private providers: { [key: string]: any };
@@ -9,6 +10,7 @@ export default class ProviderLoader {
 		this.providers = {
 			openai: OpenAI,
 			anthropic: Anthropic,
+			togetherai: TogetherAI,
 		};
 	}
 
@@ -26,5 +28,12 @@ export default class ProviderLoader {
 
 	public getProviders(): string[] {
 		return Object.keys(this.providers);
+	}
+
+	public listProviders(): any[] {
+		return Object.keys(this.providers).map((provider) => ({
+			name: this.getInstance(provider, '', '')!.displayName,
+			value: provider,
+		}));
 	}
 }
