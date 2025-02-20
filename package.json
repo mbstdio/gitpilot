@@ -18,9 +18,9 @@
 		"gpt"
 	],
 	"bin": {
-		"gitpilot": "./dist/cli.js",
-		"gitp": "./dist/cli.js",
-		"gp": "./dist/cli.js"
+		"gitpilot": "dist/cli.js",
+		"gitp": "dist/cli.js",
+		"gp": "dist/cli.js"
 	},
 	"scripts": {
 		"build": "pkgroll --minify",
